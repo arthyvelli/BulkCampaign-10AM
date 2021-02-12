@@ -58,7 +58,7 @@ public class CampaignPage extends BasePage {
 		CampaignDuplicatePage campdup=new CampaignDuplicatePage(driver);
 		//int Campcount=excel.getnum(0, i, 2);
 		System.out.println("No.of campaigns ="+userscount);
-		String myTime = "10:00";
+		String myTime = "16:00";
 		/*SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 			Date d = df.parse(myTime); 
 			Calendar cal = Calendar.getInstance();
