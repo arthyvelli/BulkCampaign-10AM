@@ -21,7 +21,7 @@ public class CampaignElements {
 	public static String EditDup="//ul[@class='dropdown-menu dropdown-menu-right show']/li[1]";
 	
 	//public static String ChooseContactstage="//div[@class='form-wizard-step ']";
-	public static String ChooseContactstage="(//button[@class='btn btnw-170 btn-primary'])[2]";
+	public static String ChooseContactstage="//div[@class='ml-auto col-auto']/button[normalize-space()='Continue']";
 	
 	//public static String SelectList="//*[@id='__BVID__369']/div/div[1]/div/label";
     public static String SelectList="//div[@class='row mt-4 list-check-row']/div[1]/div/label/span[2]";
