@@ -1,6 +1,9 @@
 package pages;
-
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -73,6 +76,9 @@ public static void moveToElement(WebDriver driver,WebElement ele) {
 	Actions action=new Actions(driver);
 	action.moveToElement(ele).build().perform();
 }
+public static void clear(WebDriver driver,WebElement ele) {
+	   ele.clear();
+}
 public static void clear(WebDriver driver,String locator) {
 	driver.findElement(By.xpath(locator)).clear();
 }
@@ -114,10 +120,72 @@ public static void waitForAlert(WebDriver driver, long timeout) { // 25
 		.pollingEvery(Duration.ofSeconds(1))
 		.until(ExpectedConditions.alertIsPresent());
 	}
-/*	
-	public static void performScrollToElement(WebDriver driver, WebElement element) { 
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	public long getTime() {
+	       return new java.util.Date().getTime();
+	   }
+	
+//	public static void waitForClick(WebDriver driver, WebElement template) {
+//		JavascriptExecutor jse = (JavascriptExecutor)driver;
+//    	jse.executeScript("arguments[0].click()", template);
+//	}
+
+	public static void waitForClick(WebDriver driver, WebElement template) {
+		// TODO Auto-generated method stub
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+    	jse.executeScript("arguments[0].click()", template);
 	}
-	*/
+	
+	public static String getDate(String format) {
+	 DateFormat df = new SimpleDateFormat(format);
+     Date dateobj = new Date(0);
+     return df.format(dateobj);
+	}
+	
+	public void scrollVertical(WebDriver driver,int pix1, int pix2) {
+	       JavascriptExecutor js = (JavascriptExecutor) driver;
+	       js.executeScript("window.scrollBy("+pix1+","+pix2+")");
+	   }
+	
+	public void ScrollByVisibleElement(WebDriver driver,  WebElement Element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;        
+        js.executeScript("arguments[0].scrollIntoView();", Element);
+    }
+	
+	public static void javascriptClick(WebDriver driver,WebElement ele) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("arguments[0].click()", ele);
+	}
+	
+//	 public void waitUntilPageLoad(WebDriver driver) {
+//	       new WebDriverWait(driver, 25).until(
+//	                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+//	   }
+	
+	public void waitUntilPageLoad(WebDriver driver, int time) {
+	       new WebDriverWait(driver, time).until(
+	                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+	   }
+	
+	  public static String getText(WebDriver driver,WebElement ele) {
+	        return ele.getText();
+	    }
+	  
+	  public static void switchToFrame(WebDriver driver,WebElement ele) {
+			driver.switchTo().frame(ele);
+		}
+	  
+	  public static void goToPreviousTab(WebDriver driver) {
+			((JavascriptExecutor)driver).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(tabs.get(0));
+		}
+	  
+	  public static void goToNewTabAndOpenLink(WebDriver driver, String url) {
+			((JavascriptExecutor)driver).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+			driver.switchTo().window(tabs.get(1));
+			driver.get(url);
+		}
+		
 
 }

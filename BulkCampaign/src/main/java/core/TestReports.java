@@ -22,11 +22,8 @@ public class TestReports {
 		test = report.startTest(testName);
 	}
 	
-	public void logReport(LogStatus status, String testStep, Throwable throwable ) {
-		test.log(status, testStep, throwable);
-	}
-	public void logReport(LogStatus status, String testStep, String testresult ) {
-		test.log(status, testStep, testresult);
+	public void logReport(LogStatus status, String testStep, String testDesc ) {
+		test.log(status, testStep, testDesc);
 	}
 	
 	public void endReport() {

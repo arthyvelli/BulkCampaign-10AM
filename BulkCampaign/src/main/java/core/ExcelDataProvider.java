@@ -32,9 +32,6 @@ public class ExcelDataProvider {
 		rowEnd = testDataSheet.getLastRowNum();
 
 	}
-	
-	
-	
 		
 	public String getTestData(String testCaseName, String columnName) {
 		String value = "null";

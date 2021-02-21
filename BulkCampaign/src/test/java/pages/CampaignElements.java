@@ -28,7 +28,7 @@ public class CampaignElements {
 	//*[@id="__BVID__369"]/div/div[1]/div/label
 	//public static String SelectList="//div[@class='pr-md-6 col-sm-12 col-md-6']/div[3]/div/div/div";
 	
-	public static String Continuebtn="//button[@class='btn btnw-170 btn-primary']";
+	public static String Continuebtn="//*[@class='btn btnw-170 btn-primary']/text()";
 	
 	public static String schedule="//div[@class='create-section-footer border-top']/div/div/div[2]/button[1]";
 	
