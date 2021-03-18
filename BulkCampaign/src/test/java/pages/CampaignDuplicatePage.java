@@ -28,7 +28,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.LogStatus;
 public class CampaignDuplicatePage  {
 	private WebDriver driver;
-	
+
 	@FindBy(xpath="//*[@id='app']/div/section/div[2]/div[1]/div/div[1]/form/div[4]/div[1]/div/div[2]")
 	private WebElement SenderId;  
 	@FindBy(xpath="//a[text()='Advanced']")
@@ -48,16 +48,16 @@ public class CampaignDuplicatePage  {
 	@FindBy(name="saturday-limit")
 	private WebElement DateSat;
 	@FindBy(name="sunday-limit")
-    private WebElement DateSun;
+	private WebElement DateSun;
 	@FindBy(xpath="//li[contains(text(),'All days')]")
 	private WebElement Allday;
-	
+
 	@FindBy(xpath="//button[@class='btn small-btn btn-outline-primary']")
 	private WebElement Button_Edit;
-	
+
 	@FindBy(xpath="//*[@id='campaignSpeed']")
 	private WebElement CampSpeed;
-	
+
 	@FindBy(xpath="(//span[@class='vue__time-picker time-picker']/input)[1]")
 	private WebElement startime;
 	@FindBy(xpath="(//span[@class='vue__time-picker time-picker']/input)[2]")
@@ -70,7 +70,7 @@ public class CampaignDuplicatePage  {
 	private WebElement tuestarttime;
 	@FindBy(xpath="(//div[@name='tuesday']//span[@class='vue__time-picker time-picker']/input)[2]")
 	private WebElement tueendtime;
-	
+
 	@FindBy(xpath="(//div[@name='wednesday']//span[@class='vue__time-picker time-picker']/input)[1]")
 	private WebElement wedstarttime;
 	@FindBy(xpath="(//div[@name='wednesday']//span[@class='vue__time-picker time-picker']/input)[2]")
@@ -92,24 +92,30 @@ public class CampaignDuplicatePage  {
 	@FindBy(xpath="(//div[@name='sunday']//span[@class='vue__time-picker time-picker']/input)[2]")
 	private WebElement sunendtime;
 	//choose recipients
-		@FindBy(xpath="//input[@placeholder='Search' and @class='form-control']")
-		private WebElement recipientsSearch;
-		@FindBy(xpath="(//div[@class='custom-control custom-control-inline custom-checkbox']/input[@class='custom-control-input'])[1]")
-		private WebElement recipientChoose;
-		@FindBy(xpath="//button[@class='btn btnw-170 btn-primary']")
-		private WebElement submitBtn;
-		
-		@FindBy(xpath="//a[@href='/campaign']")
-		private WebElement campaignLink;
-		
-		@FindBy(xpath="//input[@placeholder='Search']")
-		private WebElement searchList;
-		@FindBy(xpath="//p[@class='text-content font-15 mb-0']")
-		private WebElement listCount;
-		@FindBy(xpath="(//a[@class='d-block a-text-underline text-truncate'])[1]")
-		private WebElement searchedResultName;
-		
-		
+	@FindBy(xpath="//input[@placeholder='Search' and @class='form-control']")
+	private WebElement recipientsSearch;
+	@FindBy(xpath="(//div[@class='custom-control custom-control-inline custom-checkbox']/input[@class='custom-control-input'])[1]")
+	private WebElement recipientChoose;
+	@FindBy(xpath="//button[@class='btn btnw-170 btn-primary']")
+	private WebElement submitBtn;
+
+	@FindBy(xpath="//a[@href='/campaign']")
+	private WebElement campaignLink;
+
+	@FindBy(xpath="//input[@placeholder='Search']")
+	private WebElement searchList;
+	@FindBy(xpath="//p[@class='text-content font-15 mb-0']")
+	private WebElement listCount;
+	@FindBy(xpath="(//a[@class='d-block a-text-underline text-truncate'])[1]")
+	private WebElement searchedResultName;
+
+	//Choose segments 
+
+	@FindBy(xpath="//button[text()='Segments']")
+	private WebElement segmentBtn;
+	@FindBy(xpath="(//span[@class='text-truncate recipients-trun'])[1]")
+	private WebElement segment; 
+
 	public WebDriverWait wait;
 
 	public CampaignDuplicatePage(WebDriver driver) {
@@ -117,7 +123,7 @@ public class CampaignDuplicatePage  {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void DuplicateEdit(String Senderid,String listname) throws InterruptedException{
+	public void DuplicateEdit(String Senderid,String segmentName) throws InterruptedException{
 
 		Thread.sleep(2000);	  
 		//Select the dropdown
@@ -144,79 +150,93 @@ public class CampaignDuplicatePage  {
 		BasePage.waitForElement(driver,CampaignElements.EditDup,50);
 		BasePage.ClickElement(driver,CampaignElements.EditDup);
 		//Select sender id 
-				BasePage.performScrollToElement(driver,SenderId);
+		BasePage.performScrollToElement(driver,SenderId);
 
-				Thread.sleep(2000);	
-				WebElement sendidselct = driver.findElement(By.xpath("//*[@id='app']/div/section/div[2]/div[1]/div/div[1]/form/div[4]/div[1]/div/div[2]"));
-				Actions builder = new Actions(driver);
-				System.out.println("Sender Id"+Senderid);
-				builder.moveToElement(sendidselct).sendKeys(sendidselct,Senderid).
-				sendKeys(Keys.ENTER).build().perform();
-				Thread.sleep(2000);
-				//Select Choose contact form wizard
-				BasePage.waitForElement(driver,CampaignElements.ChooseContactstage,30);
-				BasePage.ClickElement(driver,CampaignElements.ChooseContactstage);
+		Thread.sleep(2000);	
+		WebElement sendidselct = driver.findElement(By.xpath("//*[@id='app']/div/section/div[2]/div[1]/div/div[1]/form/div[4]/div[1]/div/div[2]"));
+		Actions builder = new Actions(driver);
+		System.out.println("Sender Id"+Senderid);
+		builder.moveToElement(sendidselct).sendKeys(sendidselct,Senderid).
+		sendKeys(Keys.ENTER).build().perform();
+		Thread.sleep(2000);
+		//Select Choose contact form wizard
+		BasePage.waitForElement(driver,CampaignElements.ChooseContactstage,30);
+		BasePage.ClickElement(driver,CampaignElements.ChooseContactstage);
+		/*	//Select list	
+				BasePage.waitForElement(driver,CampaignElements.SelectList,30);
 
-		//Select list	
-	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				BasePage.ClickElement(driver,CampaignElements.SelectList);
+
+				//Save contacts
+
+				BasePage.waitForElement(driver,CampaignElements.Continuebtn,30);
+
+				BasePage.ClickElement(driver,CampaignElements.Continuebtn);
+		 */
+
+		//Select segment
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		BasePage.waitForElement(driver, segmentBtn, 30);
+		BasePage.ClickElement(driver,segmentBtn);
 		BasePage.waitForElement(driver, recipientsSearch, 30);
-		BasePage.setText(driver, recipientsSearch,listname);
-        BasePage.javascriptClick(driver, recipientChoose);
-      	BasePage.waitForElement(driver, submitBtn, 30);
+		BasePage.setText(driver, recipientsSearch,segmentName);
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+		BasePage.javascriptClick(driver, segment);
+		BasePage.waitForElement(driver, submitBtn, 30);
 		BasePage.ClickElement(driver,submitBtn);
 		System.out.println("Recipients chosen");
-		
+
 		//schedule 
-				BasePage.waitForElement(driver,CampaignElements.schedule,50);
-				BasePage.ClickElement(driver,CampaignElements.schedule);
-				System.out.println("Campaign Scheduled Successfully");
+		BasePage.waitForElement(driver,CampaignElements.schedule,50);
+		BasePage.ClickElement(driver,CampaignElements.schedule);
+		System.out.println("Campaign Scheduled Successfully");
 
 
-		
-			
 
-			}
 
-			public void Schedule(String time) throws InterruptedException {
 
-				BasePage.waitForElement(driver,CampaignElements.schedTime,50);
-				Thread.sleep(1000);
-				BasePage.clear(driver,CampaignElements.schedTime);
-				Thread.sleep(1000);
-				BasePage.ClickElement(driver,CampaignElements.schedTime);
-				Thread.sleep(1000);
-				BasePage.EnterText(driver,CampaignElements.schedTime,time);
-			}
-			public void Scheduleconfirm() throws InterruptedException  {
-				try {
-					BasePage.waitForElement(driver,CampaignElements.schedconfirm,50);
-					Thread.sleep(1000);
-					BasePage.ClickElement(driver,CampaignElements.schedconfirm);
-					Thread.sleep(1000);
+	}
 
-					BasePage.waitForElement(driver,CampaignElements.closeSuccessmessage,50);
-					Thread.sleep(1000);
-					BasePage.ClickElement(driver,CampaignElements.closeSuccessmessage);
+	public void Schedule(String time) throws InterruptedException {
 
-				}
-				catch(Exception e) {
-					System.out.println(e);
-					Thread.sleep(1000);
-					BasePage.waitForElement(driver, CampaignElements.scheduleclosebutton, 25);
-					System.out.println("trying to close the time windoe");
-					BasePage.ClickElement(driver, CampaignElements.scheduleclosebutton);
-					Thread.sleep(1000);
-					BasePage.waitForElement(driver, CampaignElements.camaignpreviewclose, 25);
-					BasePage.ClickElement(driver, CampaignElements.camaignpreviewclose);
-					System.out.println("trying to close the camp windoe");
+		BasePage.waitForElement(driver,CampaignElements.schedTime,50);
+		Thread.sleep(1000);
+		BasePage.clear(driver,CampaignElements.schedTime);
+		Thread.sleep(1000);
+		BasePage.ClickElement(driver,CampaignElements.schedTime);
+		Thread.sleep(1000);
+		BasePage.EnterText(driver,CampaignElements.schedTime,time);
+	}
+	public void Scheduleconfirm() throws InterruptedException  {
+		try {
+			BasePage.waitForElement(driver,CampaignElements.schedconfirm,50);
+			Thread.sleep(1000);
+			BasePage.ClickElement(driver,CampaignElements.schedconfirm);
+			Thread.sleep(1000);
 
-		              	      }
+			BasePage.waitForElement(driver,CampaignElements.closeSuccessmessage,50);
+			Thread.sleep(1000);
+			BasePage.ClickElement(driver,CampaignElements.closeSuccessmessage);
 
-			        }
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			Thread.sleep(1000);
+			BasePage.waitForElement(driver, CampaignElements.scheduleclosebutton, 25);
+			System.out.println("trying to close the time windoe");
+			BasePage.ClickElement(driver, CampaignElements.scheduleclosebutton);
+			Thread.sleep(1000);
+			BasePage.waitForElement(driver, CampaignElements.camaignpreviewclose, 25);
+			BasePage.ClickElement(driver, CampaignElements.camaignpreviewclose);
+			System.out.println("trying to close the camp windoe");
+
+		}
+
+	}
 
 
 	public void timeBaseSchedule() throws InterruptedException {
-		
+
 		try {
 			BasePage.waitForElement(driver,CampaignElements.schedTime,50);
 			Thread.sleep(1000);
@@ -232,7 +252,7 @@ public class CampaignDuplicatePage  {
 			//Select All Days 
 			BasePage.ClickElement(driver, Allday);
 			//Enter Campaign for Monday
-            BasePage.setText(driver, DateMon,"100000");
+			BasePage.setText(driver, DateMon,"100000");
 			BasePage.waitForElement(driver,monstarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,monstarttime);
@@ -247,10 +267,10 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,monendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,monendtime,"18:00");
-			
-			
+
+
 			//Enter Campaign for Tuesday
-            BasePage.setText(driver, DateTue,"100000");
+			BasePage.setText(driver, DateTue,"100000");
 			BasePage.waitForElement(driver,tuestarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,tuestarttime);
@@ -265,11 +285,11 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,tueendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,tueendtime,"18:00");
-			
-			
+
+
 			//Enter Camapign for Wednesday
 			BasePage.setText(driver, DateWed,"100000");
-			
+
 			//div[@name="tuesday"]//span[@class='vue__time-picker time-picker']/input
 			BasePage.waitForElement(driver,wedstarttime,50);
 			Thread.sleep(1000);
@@ -285,11 +305,11 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,wedendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,wedendtime,"18:00");
-			
+
 
 			//Enter Camapign for Thursday
 			BasePage.setText(driver, DateThur,"100000");
-						
+
 			BasePage.waitForElement(driver,thurstarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,thurstarttime);
@@ -304,11 +324,11 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,thurendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,thurendtime,"18:00");
-			
-			
+
+
 			//Enter Campaign for Friday
 			BasePage.setText(driver, DateFri,"100000");
-						
+
 			BasePage.waitForElement(driver,fristarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,fristarttime);
@@ -323,10 +343,10 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,friendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,friendtime,"18:00");
-			
+
 			//Enter Campaign for Saturday
 			BasePage.setText(driver, DateSat,"100000");
-						
+
 			BasePage.waitForElement(driver,satstarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,satstarttime);
@@ -341,10 +361,10 @@ public class CampaignDuplicatePage  {
 			BasePage.ClickElement(driver,satendtime);
 			Thread.sleep(1000);
 			BasePage.setText(driver,satendtime,"18:00");
-             
+
 			//Enter Campaign for Sunday
 			BasePage.setText(driver, DateSun,"100000");
-						
+
 			BasePage.waitForElement(driver,sunstarttime,50);
 			Thread.sleep(1000);
 			BasePage.clear(driver,sunstarttime);
@@ -361,7 +381,7 @@ public class CampaignDuplicatePage  {
 			BasePage.setText(driver,sunendtime,"18:00");
 
 
-			
+
 			BasePage.ClickElement(driver, CampaignElements.schedconfirm);
 			Thread.sleep(1000);
 
@@ -373,8 +393,8 @@ public class CampaignDuplicatePage  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
+
+
 	}
 }
 
