@@ -58,7 +58,7 @@ public class BulkCampaign extends TestBase{
 		
 }
 */	
-	@Test(dataProvider="extractData",priority=1)
+		@Test(dataProvider="extractData",priority=3)
 	public void Verify_TimeBasedBulk_Campaign(HashMap<String,String> data) throws ParseException, IOException, InterruptedException, Exception {
 		System.out.println("Hello");
 		 Thread.sleep(1000);
@@ -75,7 +75,8 @@ public class BulkCampaign extends TestBase{
 		
 		tbcampaign = new TimeBaseCampaignPage(driver());
 		tbcampaign.getSenderId(data.get("senderid1"),data.get("senderid2"),data.get("senderid3"),data.get("senderid4"),data.get("senderid5"));
-		tbcampaign.Bulk_TBcampaign1(data.get("usercount"),(data.get("listname")));
+		tbcampaign.getsegmentname(data.get("segment1"),data.get("segment2"),data.get("segment3"),data.get("segment4"),data.get("segment5"));
+		tbcampaign.Bulk_TBcampaign1(data.get("usercount"));
 	}
 		/*
 		if(campaign.Verify_Bulk_campaign(data.get("UserCount")) == true) {
